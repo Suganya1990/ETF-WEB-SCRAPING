@@ -42,7 +42,9 @@ def get_date(soup):
      #converts date string into date obj
      date_format = '%m/%d/%Y'
      date_time_obj = datetime.strptime(temp_date_str[0], date_format)
-     date_obj= '%s/%s/%s' % (date_time_obj.month, date_time_obj.day, date_time_obj.year)
+     date_obj = date_time_obj.date()
+     
+     print(date_obj)
      return date_obj
 
 # def get_etf(soup):
@@ -85,9 +87,10 @@ def save_as_csv(table_name, headers, rows, date_obj, etf):
     # print(headers)
    df =  pd.DataFrame(rows, columns=headers)
    df = df.assign(ETF = etf)
-
    df = df.assign(Date = date_obj)
-   df.to_csv(f"{table_name}.csv")
+   path='C:\\Users\\smahe\\Desktop\\DataSets\\ETF_U Datasets\\'
+   date_obj_str= '%s-%s-%s' % (date_obj.month, date_obj.day, date_obj.year)
+   df.to_csv(f"{path+etf+'_'+date_obj_str}.csv", index=False)
 
 def main(url, etf):
     #get the soup
