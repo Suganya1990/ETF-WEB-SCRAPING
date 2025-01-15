@@ -6,8 +6,6 @@ from datetime import datetime
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
 # US english
 LANGUAGE = "en-US,en;q=0.5"
-
-
 def get_soup(url):
     """Constructs and returns a soup using the HTML content of 'url' passed"""
     #initialize a session
@@ -95,12 +93,9 @@ def save_as_csv(table_name, headers, rows, date_obj, etf):
 def main(url, etf):
     #get the soup
     soup=get_soup(url)
-
     #extract all the tables from the web page
     table= get_table(soup)
-    last_updated_holdings = get_date(soup)
-
-    print(f"[+] found a total of {len(table)} tables.")
+    current_date = get_date(soup)
 
     #iterate ovre all tables
 
@@ -111,7 +106,8 @@ def main(url, etf):
         #save tables as csv file
         # table_name = f"table-{i}"
         # print(f"[+] Saving {table_name}")
-    save_as_csv('table-1', headers, rows, last_updated_holdings, etf)
+
+    save_as_csv('table-1', headers, rows, current_date, etf)
 
 
 if __name__=="__main__":
